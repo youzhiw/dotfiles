@@ -1,7 +1,6 @@
-e.g.
 to link the configs
-`cd ~/dotfiles`
-`stow nvim`
+- `cd ~/dotfiles`
+- `stow nvim`
 
 # Neovim notes
 - remember to install ripgrep for telescope live grep to work
