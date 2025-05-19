@@ -9,7 +9,7 @@ return {
         "williamboman/mason-lspconfig.nvim",
         config = function()
             require("mason-lspconfig").setup({
-                ensure_installed = {"gopls", "lua_ls"}
+                ensure_installed = {"gopls", "lua_ls", "ts_ls"}
             })
         end
     },
@@ -25,14 +25,11 @@ return {
 
             lspconfig.gopls.setup({})
 
-            -- -- TypeScript and JavaScript LSP
-            -- lspconfig.tsserver.setup({
-            --     on_attach = function(client, bufnr)
-            --         -- Disable tsserver's formatting (optional if using Prettier)
-            --         client.server_capabilities.documentFormattingProvider = false
-            --         client.server_capabilities.documentRangeFormattingProvider = false
-            --     end
-            -- })
+            -- TypeScript and JavaScript LSP
+            lspconfig.ts_ls.setup({
+                on_attach = function(client, bufnr)
+                end
+            })
 
             -- Keybindings for LSP actions
             vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
