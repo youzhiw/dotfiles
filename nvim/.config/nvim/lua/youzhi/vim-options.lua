@@ -23,7 +23,7 @@ vim.keymap.set('v', 'p', 'P')
 vim.keymap.set('n', 'U', '<C-r>')
 
 -- Map jj to ESC in insert mode
-vim.api.nvim_set_keymap('i', 'jj', '<Esc>', {noremap = true})
+vim.api.nvim_set_keymap('i', 'jj', '<Esc>', { noremap = true })
 
 -- clear search highlighting
 vim.keymap.set('n', '<Esc>', ':nohlsearch<cr>')
@@ -75,10 +75,11 @@ vim.keymap.set("n", "<leader>p", ":bp<cr>")
 vim.keymap.set("n", "<leader>x", ":bd<cr>")
 
 --lsp
-vim.keymap.set("n",  "<leader>fmp",  ":silent !black %<cr>")
+vim.keymap.set("n", "<leader>fmp", ":silent !black %<cr>")
 
 --scrolloff
 vim.o.scrolloff = 5
 
 --cursor
 -- vim.opt.guicursor = "a:blinkon0"  -- Disable Neovim's cursor blink control
+--

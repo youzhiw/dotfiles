@@ -22,7 +22,8 @@ family = "Hack Nerd Font"
 style = "Regular"
 
 [window]
-opacity = 1 
+opacity = 0.6
+blur = true
 startup_mode = "Maximized"
 decorations = "Buttonless"
 
@@ -31,3 +32,8 @@ style = {shape = "Underline", blinking = "On"}
 
 [env]
 TERM = "xterm-256color"
+
+[keyboard]
+bindings = [
+  { key = "N", mods = "Control|Shift", action = "CreateNewWindow" }
+]

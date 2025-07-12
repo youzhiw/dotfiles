@@ -1,62 +1,206 @@
-#!/usr/bin/env sh
+#!/bin/bash
+# BUG: the white boarders around each space doesn't render sometimes..
 
-source "$HOME/.config/sketchybar/colors.sh" # Loads all defined colors
-source "$HOME/.config/sketchybar/icons.sh" # Loads all defined icons
+# A simple sketchybar config for aerospace users to get started with
+# Not too different from the base starting config!
+PLUGIN_DIR="$CONFIG_DIR/plugins"
+source "$PLUGIN_DIR/colors.sh"
 
-ITEM_DIR="$HOME/.config/sketchybar/items" # Directory where the items are configured
-PLUGIN_DIR="$HOME/.config/sketchybar/plugins" # Directory where all the plugin scripts are stored
+##### Bar Appearance #####
+# Configuring the general appearance of the bar.
+# These are only some of the options available. For all options see:
+# https://felixkratz.github.io/SketchyBar/config/bar
+# If you are looking for other colors, see the color picker:
+# https://felixkratz.github.io/SketchyBar/config/tricks#color-picker
 
-FONT="SF Pro" # Needs to have Regular, Bold, Semibold, Heavy and Black variants
-SPACE_CLICK_SCRIPT="yabai -m space --focus \$SID 2>/dev/null" # The script that is run for clicking on space components
+sketchybar --bar position=top height=37 color="$TRANSPARENT"
 
-PADDINGS=3 # All paddings use this value (icon, label, background)
+##### Changing Defaults #####
+# We now change some default values, which are applied to all further items.
+# For a full list of all available item properties see:
+# https://felixkratz.github.io/SketchyBar/config/items
 
-POPUP_BORDER_WIDTH=2
-POPUP_CORNER_RADIUS=11
+default=(
+  padding_left=5
+  padding_right=5
+  icon.font="Hack Nerd Font:Bold:17.0"
+  label.font="SF Pro:Semibold:17.0"
+  icon.color="$TEXT_GREY"
+  label.color="$TEXT_GREY"
+  icon.padding_left=4
+  icon.padding_right=4
+  label.padding_left=4
+  label.padding_right=4
+  updates=on
+  y_offset=-3
+)
+sketchybar --default "${default[@]}"
 
-SHADOW=on
+sketchybar --add item spacePaddingLeft left --set spacePaddingLeft padding_left=-18
 
-# Setting up the general bar appearance and default values
-sketchybar --bar     height=50                                         \
-                     color=$BAR_COLOR                                  \
-                     shadow=$SHADOW                                    \
-                     position=right                                     \
-                     sticky=on                                         \
-                     padding_right=18                                  \
-                     padding_left=18                                   \
-                     corner_radius=9                                   \
-                     y_offset=10                                       \
-                     margin=10                                         \
-                     blur_radius=20                                    \
-                                                                       \
-           --default updates=when_shown                                \
-                     icon.font="$FONT:Bold:14.0"                       \
-                     icon.color=$ICON_COLOR                            \
-                     icon.padding_left=$PADDINGS                       \
-                     icon.padding_right=$PADDINGS                      \
-                     label.font="$FONT:Semibold:13.0"                  \
-                     label.color=$LABEL_COLOR                          \
-                     label.padding_left=$PADDINGS                      \
-                     label.padding_right=$PADDINGS                     \
-                     background.padding_right=$PADDINGS                \
-                     background.padding_left=$PADDINGS                 \
-                     popup.background.border_width=2                   \
-                     popup.background.corner_radius=11                 \
-                     popup.background.border_color=$POPUP_BORDER_COLOR \
-                     popup.background.color=$POPUP_BACKGROUND_COLOR    \
-                     popup.background.shadow.drawing=$SHADOW
+##### Adding aerospace layouts #####
+# Add the aerospace_workspace_change event we specified in aerospace.toml
+sketchybar --add event aerospace_workspace_change
+sketchybar --add event aerospace_monitor_change
 
-# Left
-source "$ITEM_DIR/apple.sh"
-source "$ITEM_DIR/spaces.sh"
+# For some reaseon probs cause aerospace.toml workpace bindings have changed. the list-workspaces --all no longer lists ALL workspaces,
+# merely the ones in use, hence all workspaces have to be defined manually. This does give us the advantage of having hidden workspaces
+# WORKSPACES=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10"
+#   "A" "B" "C" "D" "E" "F" "G" "I" "M"
+#   "N" "O" "P" "Q" "R" "S" "T" "U" "V" "W" "X" "Y" "Z")
+for sid in $(aerospace list-workspaces --all); do
+  sketchybar --add item space.$sid left \
+    --set space.$sid \
+    display="$(
+      v=$(aerospace list-windows --workspace "$sid" --format "%{monitor-appkit-nsscreen-screens-id}" | cut -c1)
+      echo "${v:-1}"
+    )" \
+    drawing=off \
+    background.corner_radius=5 \
+    background.drawing=on \
+    background.border_width=1 \
+    background.height=23 \
+    background.padding_right=5 \
+    background.padding_left=5 \
+    icon="$sid" \
+    icon.shadow.drawing=off \
+    icon.padding_left=10 \
+    label.font="sketchybar-app-font:Regular:16.0" \
+    label.padding_right=20 \
+    label.padding_left=0 \
+    label.y_offset=-1 \
+    label.shadow.drawing=off \
+    click_script="~/.config/aerospace/workspace_change.sh $sid"
+done
 
-# Center
-# source "$ITEM_DIR/spotify.sh"
+# Load Icons on startup
+for mid in $(aerospace list-monitors | cut -c1); do
+  for sid in $(aerospace list-workspaces --monitor $mid --empty no); do
+    apps=$(aerospace list-windows --workspace "$sid" | awk -F'|' '{gsub(/^ *| *$/, "", $2); print $2}')
 
-# Right
-source "$ITEM_DIR/calendar.sh"
+    sketchybar --set space.$sid drawing=on
 
-############## FINALIZING THE SETUP ##############
+    icon_strip=" "
+    if [ "${apps}" != "" ]; then
+      while read -r app; do
+        icon_strip+=" $($CONFIG_DIR/plugins/icon_map_fn.sh "$app")"
+      done <<<"${apps}"
+    else
+      icon_strip=""
+    fi
+    sketchybar --set space.$sid label="$icon_strip"
+  done
+done
+
+# Set color for currently focused space
+sketchybar --set space."$(aerospace list-workspaces --focused)" background.color=$HIGHLIGHT_BACKGROUND label.color=$TEXT_WHITE icon.color=$TEXT_WHITE background.border_color=$TEXT_GREY
+
+sketchybar --add item spacePaddingRight left --set spacePaddingRight padding_left=-18
+
+sketchybar --add item space_separator q \
+  --set space_separator icon="􀣺" \
+  icon.padding_left=20 \
+  icon.padding_right=0 \
+  icon.margin_right=0 \
+  label.drawing=off \
+  label.padding_left=0 \
+  label.margin_left=0 \
+  background.drawing=off \
+  script="$PLUGIN_DIR/space_windows.sh" \
+  --subscribe space_separator aerospace_workspace_change space_windows_change aerospace_monitor_change
+
+##### Adding Right Items #####
+# In the same way as the left items we can add items to the right side.
+# Additional position (e.g. center) are available, see:
+# https://felixkratz.github.io/SketchyBar/config/items#adding-items-to-sketchybar
+
+# Some items refresh on a fixed cycle, e.g. the clock runs its script once
+# every 10s. Other gititems respond to events they subscribe to, e.g. the
+# volume.sh script is only executed once an actual change in system audio
+# volume is registered. More info about the event system can be found here:
+# https://felixkratz.github.io/SketchyBar/config/events
+
+sketchybar --add item clock right \
+  --set clock update_freq=10 script="$PLUGIN_DIR/clock.sh" \
+  icon.padding_left=0 \
+  label.color="$TEXT_WHITE" \
+  label.font="alarm clock:Regular:18.0" \
+  label.padding_right=20 \
+  \
+  --add item volume right \
+  --set volume script="$PLUGIN_DIR/volume.sh" \
+  --subscribe volume volume_change \
+  \
+  --add item battery right \
+  --set battery update_freq=120 script="$PLUGIN_DIR/battery.sh" \
+  --subscribe battery system_woke power_source_change \
+  \
+  --add item wifi right \
+  --set wifi script="$PLUGIN_DIR/wifi.sh" label.font="SF Pro:Italic:12.0" label.y_offset=-3 \
+  popup.background.color="$BACKGROUND" \
+  popup.background.border_width=2 \
+  popup.background.border_color="$TEXT_GREY" \
+  popup.background.corner_radius=10 \
+  popup.y_offset=5 \
+  label.max_chars=8 \
+  scroll_texts=true \
+  --subscribe wifi wifi_change mouse.entered mouse.exited \
+  \
+  --add item wifi.priv.addr popup.wifi \
+  --set wifi.priv.addr icon="󰌗" \
+  \
+  --add item wifi.pub.addr popup.wifi \
+  --set wifi.pub.addr icon="󰖟" \
+  \
+  --add alias Stats e --set Stats label.padding_left=0 label.padding_right=0 icon.padding_left=0 icon.padding_right=0 alias.update_freq=3 \
+  background.color="$BACKGROUND_DARK" \
+  background.corner_radius=10 \
+  background.drawing=on \
+  background.height=30 \
+  \
+  --add item ncspot e \
+  --set ncspot updates=when_shown update_freq=2 script="$PLUGIN_DIR/ncspot.sh" \
+  icon="" \
+  background.corner_radius=10 \
+  background.color="$BACKGROUND_DARK" \
+  background.height=30 \
+  label.font="Comic Sans Ms:Regular:13.0" \
+  label.color="$TEXT_WHITE" \
+  label.max_chars=15 \
+  scroll_texts=true \
+  click_script="tmux send-keys -t spot 'P'" \
+  \
+  --add item day e \
+  --set day label.max_chars=20 \
+  icon.padding_left=2 \
+  icon.padding_right=0 \
+  icon.font="sketchybar-app-font:Regular:16.0" \
+  icon=":obsidian:" \
+  label.padding_left=2 \
+  label.padding_right=2 \
+  background.corner_radius=10 \
+  background.color="$BACKGROUND" \
+  background.height=30 \
+  label.font="Comic Sans Ms:Regular:13.0" \
+  label.color="$TEXT_GREY" \
+  scroll_texts=true \
+  drawing=off
+
+#### Groups !!! ####
+sketchybar --add bracket spaces '/space\..*/' spacePaddingLeft spacePaddingRight \
+  --set spaces background.color="$BACKGROUND" \
+  background.corner_radius=10 \
+  background.height=30
+
+sketchybar --add bracket rightItems volume battery wifi \
+  --set rightItems background.color="$BACKGROUND" \
+  background.corner_radius=10 \
+  background.height=30
+
+sketchybar --add bracket calender clock \
+  --set clock background.color="$BACKGROUND_DARK" \
+  background.corner_radius=10 \
+  background.height=30
+
+##### Force all scripts to run the first time (never do this in a script) #####
 sketchybar --update
-
-echo "sketchybar configuation loaded.."
