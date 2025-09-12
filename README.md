@@ -16,3 +16,7 @@ to link the configs
 # Alacritty
 - remember to install hack nerd font
 `brew install --cask font-hack-nerd-font`
+
+# Tmux
+- to install the tmux plugin manager
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
