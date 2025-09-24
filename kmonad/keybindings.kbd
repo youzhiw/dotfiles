@@ -25,7 +25,7 @@
   hrms (tap-hold-next-release 200 s lalt)
   hrmd (tap-hold-next-release 200 d lctl)
   hrmf (tap-hold-next-release 200 f lsft)
-  hrm; (tap-next-release ; @kil)
+  hrm; (tap-hold-next-release 200 ; lmet)
   hrmj (tap-hold-next-release 400 j rsft :timeout-button j)
   hrmk (tap-hold-next-release 400 k rctl :timeout-button k)
   hrml (tap-hold-next-release 400 l ralt :timeout-button l)
