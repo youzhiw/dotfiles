@@ -17,25 +17,25 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 
 -- paste without overwriting
-vim.keymap.set('v', 'p', 'P')
+vim.keymap.set("v", "p", "P")
 
 -- redo
-vim.keymap.set('n', 'U', '<C-r>')
+vim.keymap.set("n", "U", "<C-r>")
 
 -- Map jj to ESC in insert mode
-vim.api.nvim_set_keymap('i', 'jj', '<Esc>', { noremap = true })
+vim.api.nvim_set_keymap("i", "jj", "<Esc>", { noremap = true })
 
 -- clear search highlighting
-vim.keymap.set('n', '<Esc>', ':nohlsearch<cr>')
+vim.keymap.set("n", "<Esc>", ":nohlsearch<cr>")
 
 -- open config
-vim.cmd('nmap <leader>c :e ~/.config/nvim/init.lua<cr>')
+vim.cmd("nmap <leader>c :e ~/.config/nvim/init.lua<cr>")
 
 -- save
-vim.cmd('nmap <leader>s :w<cr>')
+vim.cmd("nmap <leader>s :w<cr>")
 
 -- close tab
-vim.cmd('nmap <leader>qq :tabclose<cr>')
+vim.cmd("nmap <leader>qq :tabclose<cr>")
 
 -- skip folds (down, up)
 -- vim.cmd('nmap j gj')
@@ -54,7 +54,7 @@ vim.cmd('nmap <leader>qq :tabclose<cr>')
 -- },
 -- cache_enabled = 1,
 --}
-vim.opt.clipboard = 'unnamedplus'
+vim.opt.clipboard = "unnamedplus"
 
 -- search ignoring case
 vim.opt.ignorecase = true
@@ -66,7 +66,7 @@ vim.opt.smartcase = true
 vim.opt.splitright = true
 
 -- fold option
-vim.opt.foldmethod = 'indent'
+vim.opt.foldmethod = "indent"
 vim.opt.foldlevelstart = 99
 
 --tab option
@@ -83,3 +83,7 @@ vim.o.scrolloff = 5
 --cursor
 -- vim.opt.guicursor = "a:blinkon0"  -- Disable Neovim's cursor blink control
 --
+--
+vim.opt.tabstop = 8
+vim.opt.shiftwidth = 8
+vim.opt.expandtab = false
