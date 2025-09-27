@@ -1,0 +1,5 @@
+BasedOnStyle: LLVM
+SortIncludes: false        # ← don't reorder includes
+IndentWidth: 8
+TabWidth: 8
+UseTab: Always
