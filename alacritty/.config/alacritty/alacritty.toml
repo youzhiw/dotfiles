@@ -22,7 +22,7 @@ family = "Hack Nerd Font"
 style = "Regular"
 
 [window]
-opacity = 0.6
+# opacity = 0.6
 blur = true
 startup_mode = "Maximized"
 decorations = "Buttonless"

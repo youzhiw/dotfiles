@@ -7,9 +7,9 @@ to link the configs
 - you need a .vimrc file in the root directory 
 
 ## Neovim kebinds
-- `<Leader>ff`: find file
-- `<Leader>fg`: live grep
-- `<Leader>fb`: find buffer
+- `<Leader>f`: find file
+- `<Leader>g`: live grep
+- `<Leader>b`: find buffer
 - `<Leader>ee`: open file tree
 - `<Leader>ef`: open file tree under current file directory
 
