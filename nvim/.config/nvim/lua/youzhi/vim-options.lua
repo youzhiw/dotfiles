@@ -35,7 +35,7 @@ vim.cmd("nmap <leader>c :e ~/.config/nvim/init.lua<cr>")
 vim.cmd("nmap <leader>s :w<cr>")
 
 -- close tab
-vim.cmd("nmap <leader>qq :tabclose<cr>")
+vim.cmd("nmap <leader>q :tabclose<cr>")
 
 -- skip folds (down, up)
 -- vim.cmd('nmap j gj')
@@ -75,7 +75,7 @@ vim.keymap.set("n", "<leader>p", ":bp<cr>")
 vim.keymap.set("n", "<leader>x", ":bd<cr>")
 
 --lsp
-vim.keymap.set("n", "<leader>fmp", ":silent !black %<cr>")
+-- vim.keymap.set("n", "<leader>mp", ":silent !black %<cr>")
 
 --scrolloff
 vim.o.scrolloff = 5
