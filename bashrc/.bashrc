@@ -118,3 +118,4 @@ fi
 
 alias chp='perl ~/hw/checkpatch.pl --ignore SPDX_LICENSE_TAG --file --no-tree --fix-inplace'
 alias make='make -j"$(nproc)"'
+alias lg='lazygit'
