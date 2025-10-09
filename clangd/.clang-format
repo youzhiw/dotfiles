@@ -1,5 +1,22 @@
-BasedOnStyle: LLVM
-SortIncludes: false        # ← don't reorder includes
-IndentWidth: 8
-TabWidth: 8
+# Linux-kernel-style essentials
 UseTab: Always
+TabWidth: 8
+IndentWidth: 8
+ContinuationIndentWidth: 8
+ColumnLimit: 80
+
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterFunction: true          # { on new line for function defs
+  AfterControlStatement: false # keep { on same line for if/for/while
+  AfterNamespace: true
+  AfterClass: false
+  AfterStruct: false
+  AfterEnum: false
+  BeforeElse: false            # "} else {" on one line
+  IndentBraces: false
+
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+AllowShortBlocksOnASingleLine: false
+SortIncludes: false
