@@ -1,13 +1,19 @@
 return {
-    "nvim-neo-tree/neo-tree.nvim",
-    branch = "v3.x",
-    dependencies = {
-        "nvim-lua/plenary.nvim",
-        "nvim-tree/nvim-web-devicons",
-        "MunifTanjim/nui.nvim",
-    },
-    config = function()
-        vim.keymap.set('n', '<leader>ee', ':Neotree filesystem toggle right<CR>', {})
-        vim.keymap.set('n', '<leader>ef', ':Neotree right %:p:h:h %:p<CR>', {})
-    end
+	"nvim-neo-tree/neo-tree.nvim",
+	branch = "v3.x",
+	dependencies = {
+		"nvim-lua/plenary.nvim",
+		"nvim-tree/nvim-web-devicons",
+		"MunifTanjim/nui.nvim",
+	},
+	config = function()
+		-- Toggle Neo-tree on the left (common)
+		vim.keymap.set('n', '<leader>ee', '<cmd>Neotree toggle<CR>', { desc = "Toggle Neo-tree" })
+
+		-- Reveal current file in Neo-tree (like VSCode's "Reveal in Explorer")
+		vim.keymap.set('n', '<leader>er', '<cmd>Neotree reveal<CR>', { desc = "Reveal file in Neo-tree" })
+
+		-- Focus Neo-tree on the right side (optional)
+		vim.keymap.set('n', '<leader>eo', '<cmd>Neotree focus right<CR>', { desc = "Focus Neo-tree" })
+	end
 }
