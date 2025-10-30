@@ -6,6 +6,29 @@ return {
 		local harpoon = require("harpoon")
 		harpoon:setup({})
 		local conf = require("telescope.config").values
+
+		-- NEW: live grep through Harpoon files
+		local function harpoon_live_grep()
+			local list = harpoon:list()
+			local file_paths = {}
+
+			for _, item in ipairs(list.items) do
+				table.insert(file_paths, item.value)
+			end
+
+			if #file_paths == 0 then
+				print("Harpoon list is empty!")
+				return
+			end
+			local telescope = require("telescope.builtin")
+
+			local keymap = vim.keymap
+
+			telescope.live_grep({
+				search_dirs = file_paths,
+			})
+		end
+
 		local function toggle_telescope(harpoon_files)
 			local file_paths = {}
 			for _, item in ipairs(harpoon_files.items) do
@@ -32,7 +55,8 @@ return {
 				end
 			end,
 		})
-
+		-- Keymaps
+		vim.keymap.set("n", "<leader>hg", harpoon_live_grep, { desc = "Live grep Harpoon files" })
 		vim.keymap.set("n", "<C-e>", function()
 			toggle_telescope(harpoon:list())
 		end, { desc = "Open harpoon window" })

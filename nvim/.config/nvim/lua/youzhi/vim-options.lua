@@ -29,13 +29,16 @@ vim.api.nvim_set_keymap("i", "jj", "<Esc>", { noremap = true })
 vim.keymap.set("n", "<Esc>", ":nohlsearch<cr>")
 
 -- open config
-vim.cmd("nmap <leader>c :e ~/.config/nvim/init.lua<cr>")
+vim.keymap.set("n", "<leader>cc", function()
+	vim.cmd.cd(vim.fn.stdpath("config")) -- usually ~/.config/nvim
+	vim.cmd.edit("init.lua")
+end, { silent = true, desc = "CD into config and open init.lua" })
 
 -- save
 vim.cmd("nmap <leader>s :w<cr>")
 
 -- close tab
-vim.cmd("nmap <leader>q :tabclose<cr>")
+vim.cmd("nmap <leader>q :q<cr>")
 
 -- skip folds (down, up)
 -- vim.cmd('nmap j gj')

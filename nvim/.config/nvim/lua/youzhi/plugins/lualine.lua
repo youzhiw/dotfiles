@@ -28,23 +28,23 @@ return {
 						color = { fg = "#f8f8f2" }, -- optional Dracula-friendly color
 					},
 
-					-- existing Harpoon indicator
-					{
-						function()
-							local ok, harpoon = pcall(require, "harpoon")
-							if not ok then
-								return ""
-							end
-							local list = harpoon:list()
-							if not list or not list.items then
-								return ""
-							end
-							return "󰛢 " .. tostring(#list.items)
-						end,
-						cond = function()
-							return pcall(require, "harpoon")
-						end,
-					},
+					-- -- existing Harpoon indicator
+					-- {
+					-- 	function()
+					-- 		local ok, harpoon = pcall(require, "harpoon")
+					-- 		if not ok then
+					-- 			return ""
+					-- 		end
+					-- 		local list = harpoon:list()
+					-- 		if not list or not list.items then
+					-- 			return ""
+					-- 		end
+					-- 		return "󰛢 " .. tostring(#list.items)
+					-- 	end,
+					-- 	cond = function()
+					-- 		return pcall(require, "harpoon")
+					-- 	end,
+					-- },
 				},
 				lualine_x = { "encoding", "fileformat", "filetype" },
 				lualine_y = { "progress" },

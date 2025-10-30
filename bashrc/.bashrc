@@ -119,3 +119,5 @@ fi
 alias chp='perl ~/hw/checkpatch.pl --ignore SPDX_LICENSE_TAG --file --no-tree --fix-inplace'
 alias make='make -j"$(nproc)"'
 alias lg='lazygit'
+alias startqemu='qemu-system-aarch64 -M virt -cpu cortex-a57 -m 2G -kernel arch/arm64/boot/Image -initrd ../../custom.img -append "console=ttyAMA0 nokaslr" -nographic -s -S'
+alias startgdb='gdb vmlinux -ex "target remote :1234"'
