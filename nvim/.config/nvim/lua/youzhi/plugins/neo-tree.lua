@@ -8,12 +8,9 @@ return {
 	},
 	config = function()
 		-- Toggle Neo-tree on the left (common)
-		vim.keymap.set('n', '<leader>ee', '<cmd>Neotree toggle<CR>', { desc = "Toggle Neo-tree" })
+		vim.keymap.set('n', '<leader>ee', '<cmd>Neotree toggle right<CR>', { desc = "Toggle Neo-tree" })
 
 		-- Reveal current file in Neo-tree (like VSCode's "Reveal in Explorer")
 		vim.keymap.set('n', '<leader>er', '<cmd>Neotree reveal<CR>', { desc = "Reveal file in Neo-tree" })
-
-		-- Focus Neo-tree on the right side (optional)
-		vim.keymap.set('n', '<leader>eo', '<cmd>Neotree focus right<CR>', { desc = "Focus Neo-tree" })
 	end
 }

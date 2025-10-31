@@ -16,11 +16,12 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 
 [mode.main.binding]
 
+
 alt-slash = 'layout tiles horizontal vertical'
 alt-comma = 'layout accordion horizontal vertical'
 alt-enter = 'exec-and-forget open -a /opt/homebrew/bin/alacritty '
 ctrl-alt-f = 'exec-and-forget /Applications/Firefox.app/Contents/MacOS/firefox -p personal'
-ctrl-alt-g = 'exec-and-forget /Applications/Firefox.app/Contents/MacOS/firefox -p Columbia'
+ctrl-alt-g = 'exec-and-forget /Applications/Firefox.app/Contents/MacOS/firefox -p columbia'
 
 alt-h =         'focus --boundaries-action wrap-around-the-workspace left'
 alt-j =         'focus --boundaries-action wrap-around-the-workspace down'
@@ -173,3 +174,7 @@ B = ['dell','main', 'secondary']
 [[on-window-detected]]
     if.app-id = 'com.vmware.fusion'
     run = ['move-node-to-workspace I']
+[[on-window-detected]]
+    if.app-id = 'com.apple.mail'
+    run = ['move-node-to-workspace M']
+
