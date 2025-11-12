@@ -1,0 +1,6 @@
+os:
+  open: "nvr --remote-tab {{filename}} && tmux select-window -t 1"
+
+git:
+  autoFetch: false
+
