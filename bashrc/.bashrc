@@ -123,3 +123,9 @@ alias startqemu='qemu-system-aarch64 -M virt -cpu cortex-a57 -m 2G -kernel arch/
 alias startgdb='gdb vmlinux -ex "target remote :1234"'
 
 export PATH="$HOME/dotfiles/scripts:$PATH"
+
+# Created by `pipx` on 2025-11-12 20:13:38
+export PATH="$PATH:/home/youzhi/.local/bin"
+export NVIM_LISTEN_ADDRESS="/tmp/nvimsocket-$(tmux display-message -p '#S' 2>/dev/null || echo default)"
+
+alias nv='rm -f $NVIM_LISTEN_ADDRESS; nvim --listen $NVIM_LISTEN_ADDRESS'
