@@ -170,3 +170,14 @@ B = ['dell','main', 'secondary']
 [[on-window-detected]]
     if.app-id = 'com.openai.chat'
     run = ['move-node-to-workspace C']
+[[on-window-detected]]
+    if.app-id = 'com.vmware.fusion'
+    run = ['move-node-to-workspace I']
+[[on-window-detected]]
+    if.app-id = 'com.apple.mail'
+    run = ['move-node-to-workspace M']
+[[on-window-detected]]
+    if.app-id = 'us.zoom.xos'
+    run = ['move-node-to-workspace Z']
+
+
