@@ -38,7 +38,7 @@ end, { silent = true, desc = "CD into config and open init.lua" })
 vim.cmd("nmap <leader>s :w<cr>")
 
 -- close tab
-vim.cmd("nmap <leader>q :tabclose<cr>")
+vim.cmd("nmap <leader>q :q<cr>")
 
 -- skip folds (down, up)
 -- vim.cmd('nmap j gj')
