@@ -73,9 +73,8 @@ vim.opt.foldmethod = "indent"
 vim.opt.foldlevelstart = 99
 
 --tab option
-vim.keymap.set("n", "<leader>n", ":bn<cr>")
-vim.keymap.set("n", "<leader>p", ":bp<cr>")
-vim.keymap.set("n", "<leader>x", ":bd<cr>")
+vim.keymap.set("n", "<leader>n", "gt", { silent = true })
+vim.keymap.set("n", "<leader>p", "gT", { silent = true })
 
 --lsp
 -- vim.keymap.set("n", "<leader>mp", ":silent !black %<cr>")
@@ -90,3 +89,23 @@ vim.o.scrolloff = 5
 vim.opt.tabstop = 8
 vim.opt.shiftwidth = 8
 vim.opt.expandtab = false
+
+-- Command: :OpenBootlinHere
+vim.api.nvim_create_user_command("OpenBootlinHere", function()
+	local file = vim.fn.expand("%:p")
+	if file == "" then
+		vim.notify("No file", vim.log.levels.WARN)
+		return
+	end
+	local line = tostring(vim.fn.line("."))
+	local script = vim.fn.expand("~/dotfiles/scripts/open_bootlin.sh")
+	if vim.fn.executable(script) == 0 then
+		vim.notify("Script not found or not executable: " .. script, vim.log.levels.ERROR)
+		return
+	end
+	-- Run detached so Neovim isn't blocked
+	vim.fn.jobstart({ script, file, line }, { detach = true })
+end, {})
+
+-- Keymap: <leader>lx to open current file on Bootlin v6.14
+vim.keymap.set("n", "<leader>lx", ":OpenBootlinHere<CR>", { silent = true, desc = "Open file on Bootlin v6.14" })

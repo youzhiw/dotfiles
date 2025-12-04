@@ -4,7 +4,9 @@ return {
 	dependencies = { "nvim-lua/plenary.nvim" },
 	config = function()
 		local harpoon = require("harpoon")
-		harpoon:setup({})
+		harpoon:setup({
+			settings = { sync_on_ui_close = true },
+		})
 		local conf = require("telescope.config").values
 
 		-- NEW: live grep through Harpoon files
