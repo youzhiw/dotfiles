@@ -30,8 +30,8 @@ vim.keymap.set("n", "<Esc>", ":nohlsearch<cr>")
 
 -- open config
 vim.keymap.set("n", "<leader>cc", function()
-	vim.cmd.cd(vim.fn.stdpath("config")) -- usually ~/.config/nvim
-	vim.cmd.edit("init.lua")
+    vim.cmd.cd(vim.fn.stdpath("config")) -- usually ~/.config/nvim
+    vim.cmd.edit("init.lua")
 end, { silent = true, desc = "CD into config and open init.lua" })
 
 -- save
@@ -73,8 +73,8 @@ vim.opt.foldmethod = "indent"
 vim.opt.foldlevelstart = 99
 
 --tab option
-vim.keymap.set("n", "<leader>n", ":bn<cr>")
-vim.keymap.set("n", "<leader>p", ":bp<cr>")
+vim.keymap.set("n", "<leader>n", ":tabNext<cr>")
+vim.keymap.set("n", "<leader>p", ":tabprevious<cr>")
 vim.keymap.set("n", "<leader>x", ":bd<cr>")
 
 --lsp
@@ -87,15 +87,12 @@ vim.o.scrolloff = 5
 -- vim.opt.guicursor = "a:blinkon0"  -- Disable Neovim's cursor blink control
 --
 --
-vim.opt.tabstop = 8
-vim.opt.shiftwidth = 8
-vim.opt.expandtab = false
 
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = "tex",
-	callback = function()
-		vim.opt_local.tabstop = 2
-		vim.opt_local.shiftwidth = 2
-		vim.opt_local.expandtab = true
-	end,
+    pattern = "tex",
+    callback = function()
+        vim.opt_local.tabstop = 2
+        vim.opt_local.shiftwidth = 2
+        vim.opt_local.expandtab = true
+    end,
 })
